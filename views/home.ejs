@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://kit.fontawesome.com/f86e7bf5e6.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="./css/style-home.css" />
+    <title>Home</title>
+  </head>
+  <body>
+    <div class="ROOT border border-5 shadow mb-5 bg-white rounded">
+      <!--USER INFO-->
+      <div class="USER-INFO p-3 d-flex flex-row justify-content-center">
+        <img
+          src=""
+          alt=""
+          class="IMG-USER rounded-circle border border-5 mx-1"
+          width="100"
+          height="100"
+        />
+        <div class="d-flex flex-column justify-content-center">
+          <p class="LABEL-USERNAME badge bg-primary text-wrap m-0"></p>
+          <select
+            onchange="CHANGE_PROFILE_PICTURE(this.value)"
+            class="IMG-OPTION border border-3 m-1"
+          >
+            <option value="">Image</option>
+            <option value="0">IMG_0</option>
+            <option value="1">IMG_1</option>
+            <option value="2">IMG_2</option>
+            <option value="3">IMG_3</option>
+            <option value="4">IMG_4</option>
+          </select>
+          <button onclick="SIGN_OUT()" class="border border-3">Sign Out</button>
+        </div>
+      </div>
+      <!--MENU-->
+      <div class="MENU d-flex justify-content-center">
+        <button onclick="SET_DISPLAY(0)">Posts</button>
+        <button onclick="SET_DISPLAY(1)">Friends</button>
+        <button class="BUTTON-REQUEST" onclick="SET_DISPLAY(2)">Request</button>
+        <button class="BUTTON-PENDING" onclick="SET_DISPLAY(3)">Pending</button>
+        <button onclick="SET_DISPLAY(4)">Other</button>
+      </div>
+      <div class="NODE">
+        <!--POSTS-->
+        <div class="POSTS">
+          <b class="mx-1">Posts</b>
+          <form action="">
+            <input
+              type="text"
+              placeholder="What's on your mind?"
+              class="INPUT-POST border border-3 m-1"
+              required
+            />
+            <input
+              type="button"
+              value="Post"
+              onclick="CREATE_POST()"
+              class="BUTTON-POST border border-3"
+            />
+          </form>
+        </div>
+
+        <!--FRIEND LISTS-->
+        <div class="FRIEND-LISTS">
+          <b class="mx-1">Friend list</b>
+          <hr />
+        </div>
+
+        <!--FRIEND REQUEST-->
+        <div class="FRIEND-REQUEST">
+          <b class="mx-1">Friend request</b>
+          <hr />
+        </div>
+
+        <!--REQUEST SENT TO-->
+        <div class="REQUEST-SENT-TO">
+          <b class="mx-1">Pending</b>
+          <hr />
+        </div>
+
+        <!--OTHER USERS-->
+        <div class="OTHER-USERS">
+          <b class="mx-1">Other users</b>
+          <hr />
+        </div>
+      </div>
+    </div>
+    <script src="./js/script-home.js"></script>
+    <script type="module" src="./js/init.js"></script>
+    <script>
+      //CHANGE PROFILE PICTURE.
+      async function CHANGE_PROFILE_PICTURE(IMG_VALUE) {
+        //GET RELEVANT INFORMATION.
+        let IMG_USER = document.getElementsByClassName("IMG-USER")[0];
+        let LABEL_USERNAME =
+          document.getElementsByClassName("LABEL-USERNAME")[0];
+        let REQUEST;
+        let RESPONSE;
+
+        //UPDATE DATA.
+        for (let i = 0; i < 3; i++) {
+          REQUEST = await fetch("/CHANGE-PROFILE-PICTURE", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              imguser: IMG_VALUE,
+              username: LABEL_USERNAME.innerText,
+              count: i,
+            },
+          });
+          RESPONSE = await REQUEST.status;
+        }
+
+        //REFRESH TOKEN.
+        if (RESPONSE == 200) {
+          REQUEST = await fetch("/REFRESH-TOKEN", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              username: LABEL_USERNAME.innerText,
+            },
+          });
+          RESPONSE = await REQUEST.json();
+          await localStorage.removeItem("TOKEN");
+          await localStorage.setItem("TOKEN", RESPONSE);
+          window.location.reload();
+        }
+      }
+
+      //CREATE POSTS.
+      async function CREATE_POST() {
+        let IMG_USER = document.getElementsByClassName("IMG-USER")[0];
+        let LABEL_USERNAME =
+          document.getElementsByClassName("LABEL-USERNAME")[0];
+        let INPUT_POST = document.getElementsByClassName("INPUT-POST")[0];
+        if (INPUT_POST.value.length > 0) {
+          let REQUEST = await fetch("/CREATE-POST", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              imguser: IMG_USER.alt,
+              username: LABEL_USERNAME.innerText,
+              content: INPUT_POST.value,
+              date_posted: new Date().getTime(),
+            },
+          });
+          let RESPONSE = await REQUEST.status;
+          window.location.reload();
+        }
+      }
+
+      //SIGN OUT.
+      function SIGN_OUT() {
+        localStorage.removeItem("TOKEN");
+        window.location.href = "/";
+      }
+    </script>
+  </body>
+</html>

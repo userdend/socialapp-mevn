@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://kit.fontawesome.com/f86e7bf5e6.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="/css/style-sign-in.css" />
+    <title>Social App</title>
+  </head>
+  <body>
+    <div class="border border-5">
+      <img
+        src="./img/4.jpg"
+        alt="4"
+        class="rounded-circle border border-5"
+        width="100"
+        height="100"
+      />
+      <h5>Join us!</h5>
+      <form
+        action="javascript:SIGN_UP()"
+        class="d-flex flex-column align-items-center"
+      >
+        <input
+          type="text"
+          placeholder="Username"
+          class="form-control m-1"
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          class="form-control m-1"
+          required
+        />
+        <input type="submit" value="Sign Up" class="btn btn-primary m-1" />
+        <a href="/" class="text-decoration-none">Sign In</a>
+      </form>
+    </div>
+    <script>
+      (async function () {
+        let GET_TOKEN = await localStorage.getItem("TOKEN");
+        if (GET_TOKEN != null) {
+          window.location.href = "/home";
+        }
+      })();
+
+      class REGISTER {
+        constructor(username, password) {
+          this.username = username;
+          this.password = password;
+        }
+
+        async CHECK_INPUT() {
+          let REQUEST = await fetch("/CHECK-INPUT", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              username: this.username,
+            },
+          });
+          let RESPONSE = await REQUEST.status;
+          return RESPONSE;
+        }
+
+        REGISTER_USER() {
+          let REQUEST = fetch("/REGISTER-USER", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              username: this.username,
+              password: this.password,
+            },
+          });
+          window.location.href = "/";
+        }
+      }
+
+      async function SIGN_UP() {
+        let HEADER = document.getElementsByTagName("h5")[0];
+        let USERNAME = document.getElementsByTagName("input")[0];
+        let PASSWORD = document.getElementsByTagName("input")[1];
+
+        //PATTERN.
+        let WHITESPACE = /\s/g;
+        let SPECIAL = /\W/g;
+
+        //CHECK FOR WHITESPACE.
+        let VALIDATE_INPUT_USERNAME = USERNAME.value.match(WHITESPACE);
+        let VALIDATE_INPUT_PASSWORD = PASSWORD.value.match(WHITESPACE);
+
+        //CHECK FOR SPECIAL CHARACTER.
+        let VALIDATE_INPUT_USERNAME_SPECIAL = USERNAME.value.match(SPECIAL);
+        let VALIDATE_INPUT_PASSWORD_SPECIAL = PASSWORD.value.match(SPECIAL);
+
+        //VALIDATE INPUT.
+        if (USERNAME.value.length >= 4 && PASSWORD.value.length >= 4) {
+          if (
+            VALIDATE_INPUT_USERNAME == null &&
+            VALIDATE_INPUT_PASSWORD == null &&
+            VALIDATE_INPUT_USERNAME_SPECIAL == null &&
+            VALIDATE_INPUT_PASSWORD_SPECIAL == null
+          ) {
+            let NEW_USER = new REGISTER(USERNAME.value, PASSWORD.value);
+            let STATUS = await NEW_USER.CHECK_INPUT();
+            if (STATUS == 200) {
+              HEADER.innerText = "Username already exist.";
+            } else {
+              NEW_USER.REGISTER_USER();
+            }
+          } else {
+            HEADER.innerText = "No special character.";
+          }
+        } else {
+          HEADER.innerText = "At least 4 characters long.";
+        }
+      }
+    </script>
+  </body>
+</html>

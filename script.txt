@@ -1,0 +1,509 @@
+// //SIGN OUT.
+// function SIGN_OUT() {
+//   localStorage.removeItem("TOKEN");
+//   window.location.href = "/";
+// }
+
+//GET SPECIFIC USER INFO.
+// async function GET_USER_INFO(RESPONSE, USER) {
+//   let SEND_REQUEST;
+//   let GET_RESPONSE;
+//   for (const index in RESPONSE) {
+//     SEND_REQUEST = await fetch("/GET-USER-INFO", {
+//       method: "GET",
+//       headers: {
+//         "Content-Type": "application/json",
+//         username: RESPONSE[index],
+//       },
+//     });
+//     GET_RESPONSE = await SEND_REQUEST.json();
+//     USER.push(GET_RESPONSE[0]);
+//   }
+//   return USER;
+// }
+
+//GET USER FRIEND LISTS.
+// async function GET_FRIEND_LISTS(REQUEST, RESPONSE, USER_INFO) {
+//   let FRIENDS = [];
+//   REQUEST = await fetch("/GET-FRIEND-LISTS", {
+//     method: "GET",
+//     headers: {
+//       "Content-Type": "application/json",
+//       username: USER_INFO.username,
+//     },
+//   });
+//   RESPONSE = await REQUEST.json();
+//   return GET_USER_INFO(RESPONSE, FRIENDS);
+// }
+
+//GET FRIEND REQUEST.
+// async function GET_FRIEND_REQUEST(REQUEST, RESPONSE, USER_INFO) {
+//   let FRIENDS_REQUEST = [];
+//   REQUEST = await fetch("/GET-FRIEND-REQUEST", {
+//     method: "GET",
+//     headers: {
+//       "Content-Type": "application/json",
+//       username: USER_INFO.username,
+//     },
+//   });
+//   RESPONSE = await REQUEST.json();
+
+//   //SET NOTIFICATION.
+//   if (RESPONSE.length != 0) {
+//     let BUTTON_REQUEST = document.getElementsByClassName("BUTTON-REQUEST")[0];
+//     let NOTIFICATION = document.createElement("p");
+
+//     //SET PROPERTIES.
+//     NOTIFICATION.innerText = RESPONSE.length;
+//     NOTIFICATION.className =
+//       "badge bg-danger text-wrap mb-0 mx-1 rounded-circle";
+
+//     //APPEND ELEMENT.
+//     BUTTON_REQUEST.appendChild(NOTIFICATION);
+//   }
+
+//   return GET_USER_INFO(RESPONSE, FRIENDS_REQUEST);
+// }
+
+//GET USER REQUEST TO.
+// async function GET_USER_REQUEST_TO(REQUEST, RESPONSE, USER_INFO) {
+//   let REQUEST_SENT_TO = [];
+//   REQUEST = await fetch("/GET-USER-REQUEST-TO", {
+//     method: "GET",
+//     headers: {
+//       "Content-Type": "application/json",
+//       username: USER_INFO.username,
+//     },
+//   });
+//   RESPONSE = await REQUEST.json();
+
+//   //SET NOTIFICATION.
+//   if (RESPONSE.length != 0) {
+//     let BUTTON_REQUEST = document.getElementsByClassName("BUTTON-PENDING")[0];
+//     let NOTIFICATION = document.createElement("p");
+
+//     //SET PROPERTIES.
+//     NOTIFICATION.innerText = RESPONSE.length;
+//     NOTIFICATION.className =
+//       "badge bg-danger text-wrap mb-0 mx-1 rounded-circle";
+
+//     //APPEND ELEMENT.
+//     BUTTON_REQUEST.appendChild(NOTIFICATION);
+//   }
+
+//   return GET_USER_INFO(RESPONSE, REQUEST_SENT_TO);
+// }
+
+//GET OTHER USERS.
+// async function OTHER_USERS(
+//   REQUEST,
+//   RESPONSE,
+//   USER_INFO,
+//   FRIEND_LISTS,
+//   FRIEND_REQUEST,
+//   USER_REQUEST_TO
+// ) {
+//   let NOT_LISTED;
+//   let FILTERED_USERS = [];
+//   REQUEST = await fetch("/GET-OTHER-USER", {
+//     method: "GET",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//   });
+//   RESPONSE = await REQUEST.json();
+//   for (let i in RESPONSE) {
+//     NOT_LISTED = true;
+//     for (let j in FRIEND_LISTS) {
+//       if (RESPONSE[i].username == FRIEND_LISTS[j].username) {
+//         NOT_LISTED = false;
+//       }
+//     }
+//     for (let k in FRIEND_REQUEST) {
+//       if (RESPONSE[i].username == FRIEND_REQUEST[k].username) {
+//         NOT_LISTED = false;
+//       }
+//     }
+//     for (let l in USER_REQUEST_TO) {
+//       if (RESPONSE[i].username == USER_REQUEST_TO[l].username) {
+//         NOT_LISTED = false;
+//       }
+//     }
+//     if (RESPONSE[i].username != USER_INFO.username && NOT_LISTED == true) {
+//       FILTERED_USERS.push(RESPONSE[i]);
+//     }
+//   }
+//   return FILTERED_USERS;
+// }
+
+//GET POSTS.
+// async function GET_POST(REQUEST, RESPONSE) {
+//   let POSTS = [];
+//   REQUEST = await fetch("/GET-POSTS", {
+//     method: "GET",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//   });
+//   RESPONSE = await REQUEST.json();
+//   for (let index in RESPONSE) {
+//     POSTS.push(RESPONSE[index]);
+//   }
+//   return POSTS;
+// }
+
+//CREATE ELEMENT
+// function CREATE_ELEMENT(
+//   REQUEST,
+//   RESPONSE,
+//   GET_DIV,
+//   GROUP,
+//   USER_INFO,
+//   IDENTIFIER
+// ) {
+//   for (let i in GROUP) {
+//     //CREATE ELEMENT.
+//     let CHILD_DIV = document.createElement("div");
+//     let CHILD_CHILD_DIV = document.createElement("div");
+//     let IMG_USER = document.createElement("img");
+//     let LABEL_USERNAME = document.createElement("a");
+//     let BUTTON_DIV = document.createElement("span");
+
+//     //INITIALIZE CHILD PROPERTIES.
+//     CHILD_DIV.className = "d-flex justify-content-between border p-1 m-1";
+//     CHILD_CHILD_DIV.className = "d-flex align-items-start m-1";
+
+//     //CREATE ICON.
+//     let ICON = document.createElement("i");
+//     let ICON1 = document.createElement("i");
+
+//     if (IDENTIFIER == 2) {
+//       //CREATE ELEMENT.
+//       let ACCEPT_BUTTON = document.createElement("button");
+//       let DECLINE_BUTTON = document.createElement("button");
+
+//       //SET PROPERTIES.
+//       ICON.className = "fa-solid fa-user-check";
+//       ACCEPT_BUTTON.appendChild(ICON);
+//       ACCEPT_BUTTON.className = "btn btn-success mx-1";
+
+//       ICON1.className = "fa-solid fa-user-xmark";
+//       DECLINE_BUTTON.appendChild(ICON1);
+//       DECLINE_BUTTON.className = "btn btn-danger";
+
+//       //FUNCTIONALITY.
+//       ACCEPT_BUTTON.onclick = function () {
+//         REQUEST = fetch("/ACCEPT-REQUEST", {
+//           method: "GET",
+//           headers: {
+//             "Content-Type": "application/json",
+//             "request-by": GROUP[i].username,
+//             "request-to": USER_INFO.username,
+//           },
+//         });
+//         ACCEPT_BUTTON.disabled = true;
+//         DECLINE_BUTTON.disabled = true;
+//         window.location.reload();
+//       };
+
+//       DECLINE_BUTTON.onclick = function () {
+//         REQUEST = fetch("/DECLINE-REQUEST", {
+//           method: "GET",
+//           headers: {
+//             "Content-Type": "application/json",
+//             "request-by": GROUP[i].username,
+//             "request-to": USER_INFO.username,
+//           },
+//         });
+//         ACCEPT_BUTTON.disabled = true;
+//         DECLINE_BUTTON.disabled = true;
+//         window.location.reload();
+//       };
+
+//       //APPEND ELEMENT.
+//       BUTTON_DIV.appendChild(ACCEPT_BUTTON);
+//       BUTTON_DIV.appendChild(DECLINE_BUTTON);
+//     }
+
+//     if (IDENTIFIER == 3) {
+//       //CREATE ELEMENT.
+//       let BUTTON = document.createElement("button");
+
+//       //SET PROPERTIES.
+//       ICON.className = "fa-solid fa-user-minus";
+//       BUTTON.appendChild(ICON);
+//       BUTTON.className = "btn btn-warning";
+
+//       //FUNCTIONALITY.
+//       BUTTON.onclick = function () {
+//         REQUEST = fetch("/CANCEL-REQUEST", {
+//           method: "GET",
+//           headers: {
+//             "Content-Type": "application/json",
+//             "request-by": USER_INFO.username,
+//             "request-to": GROUP[i].username,
+//           },
+//         });
+//         BUTTON.disabled = true;
+//         window.location.reload();
+//       };
+
+//       //APPEND ELEMENT.
+//       BUTTON_DIV.appendChild(BUTTON);
+//     }
+
+//     if (IDENTIFIER == 4) {
+//       //CREATE ELEMENT.
+//       let BUTTON = document.createElement("button");
+
+//       //SET PROPERTIES.
+//       ICON.className = "fa-solid fa-user-plus";
+//       BUTTON.appendChild(ICON);
+//       BUTTON.className = "btn btn-primary";
+
+//       //FUNCTIONALITY.
+//       BUTTON.onclick = function () {
+//         REQUEST = fetch("/ADD-FRIEND", {
+//           method: "GET",
+//           headers: {
+//             "Content-Type": "application/json",
+//             "request-by": USER_INFO.username,
+//             "request-to": GROUP[i].username,
+//           },
+//         });
+//         BUTTON.disabled = true;
+//         window.location.reload();
+//       };
+
+//       //APPEND ELEMENT.
+//       BUTTON_DIV.appendChild(BUTTON);
+//     }
+
+//     //APPEND ELEMENT.
+//     CHILD_CHILD_DIV.appendChild(IMG_USER);
+//     CHILD_CHILD_DIV.appendChild(LABEL_USERNAME);
+
+//     if (IDENTIFIER == 5) {
+//       //CREATE CONTAINER FOR POST CONTENT.
+//       let POST_CONTENT_DIV = document.createElement("span");
+
+//       //SET PROPERTIES.
+//       CHILD_DIV.className = "d-flex flex-column border p-1 m-1";
+//       CHILD_DIV.id = GROUP[i].id;
+//       POST_CONTENT_DIV.innerHTML = GROUP[i].content + "<br />";
+//       BUTTON_DIV.appendChild(POST_CONTENT_DIV);
+
+//       //IMPLEMENT COMMENT FEATURE.
+//       let COMMENT = document.createElement("input");
+//       let COMMENT_BUTTON = document.createElement("button");
+
+//       //SET STYLE.
+//       POST_CONTENT_DIV.className = "m-1";
+//       COMMENT.className = "border border-3 m-1";
+//       COMMENT_BUTTON.className = "border border-3 mx-1";
+
+//       //SET PROPERTIES.
+//       COMMENT.type = "text";
+//       COMMENT.placeholder = "Comment";
+//       COMMENT.required = true;
+//       COMMENT_BUTTON.innerText = "Sent";
+//       COMMENT_BUTTON.onclick = function () {
+//         if (COMMENT.value.length > 0) {
+//           REQUEST = fetch("/SENT-COMMENT", {
+//             method: "GET",
+//             headers: {
+//               postid: GROUP[i].id,
+//               comment: COMMENT.value,
+//               username: USER_INFO.username,
+//               userimg: USER_INFO.user_img,
+//             },
+//           });
+//           window.location.reload();
+//         }
+//       };
+//       BUTTON_DIV.appendChild(COMMENT);
+//       BUTTON_DIV.appendChild(COMMENT_BUTTON);
+
+//       //TIME POSTED.
+//       let TIME_POSTED = document.createElement("a");
+//       TIME_POSTED.innerText = GROUP[i].date_posted.split(".")[0];
+//       TIME_POSTED.className =
+//         "DATE-POSTED badge bg-secondary text-wrap text-decoration-none mx-1";
+
+//       //APPEND ELEMENT.
+//       CHILD_CHILD_DIV.appendChild(TIME_POSTED);
+
+//       if (GROUP[i].username == USER_INFO.username) {
+//         //CREATE DELETE BUTTON.
+//         let DELETE_BUTTON = document.createElement("a");
+
+//         //SET BUTTON PROPERTIES.
+//         DELETE_BUTTON.innerText = "Delete";
+//         DELETE_BUTTON.className =
+//           "DELETE-POST badge bg-danger text-wrap text-decoration-none mx-1";
+
+//         //DELETE BUTTON FUNCTIONALITY.
+//         DELETE_BUTTON.onclick = function () {
+//           REQUEST = fetch("/DELETE-POST", {
+//             method: "GET",
+//             headers: {
+//               "Content-Type": "application/json",
+//               postid: GROUP[i].id,
+//             },
+//           });
+//           window.location.reload();
+//         };
+
+//         //APPEND ELEMENT.
+//         CHILD_CHILD_DIV.appendChild(DELETE_BUTTON);
+//       }
+
+//       //GET ALL THE COMMENT FOR THIS POST.
+//       (async function () {
+//         REQUEST = await fetch("/GET-COMMENTS", {
+//           method: "GET",
+//           headers: {
+//             postid: GROUP[i].id,
+//           },
+//         });
+//         RESPONSE = await REQUEST.json();
+//         for (let i in RESPONSE) {
+//           //CREATE CONTAINER.
+//           let COMMENT_DIV = document.createElement("div");
+//           let COMMENTATOR_DIV = document.createElement("div");
+//           let COMMENT_CONTENT = document.createElement("span");
+
+//           //COMMENTATOR DETAIL.
+//           let COMMENTATOR_IMG = document.createElement("img");
+//           let COMMENTATOR_NAME = document.createElement("a");
+//           let COMMENT_DATE = document.createElement("span");
+
+//           //SET COMMENTATOR PROPERTIES.
+//           COMMENTATOR_IMG.src = "./img/" + RESPONSE[i].user_img + ".jpg";
+//           COMMENTATOR_NAME.href = "/user/" + RESPONSE[i].username;
+//           COMMENTATOR_NAME.innerText = RESPONSE[i].username;
+//           COMMENT_DATE.innerText = RESPONSE[i].date_comment.split(".")[0];
+
+//           //SET CONTAINER PROPERTIES.
+//           COMMENT_DIV.id = RESPONSE[i].id;
+
+//           //SET CONTAINER STYLE.
+//           COMMENT_DIV.className = "border border-5 p-1 m-1";
+
+//           //SET COMMENTATOR STYLE.
+//           COMMENTATOR_IMG.style.width = "40px";
+//           COMMENTATOR_IMG.style.height = "40px";
+//           COMMENTATOR_IMG.className = "rounded-circle border border-5";
+//           COMMENTATOR_NAME.className =
+//             "badge bg-info text-wrap text-decoration-none mx-1 cursor-pointer";
+//           COMMENT_DATE.className =
+//             "badge bg-secondary text-wrap text-decoration-none mx-1";
+
+//           //SET COMMENT CONTENT.
+//           COMMENT_CONTENT.innerText = RESPONSE[i].comment;
+
+//           //APPEND ELEMENT.
+//           COMMENTATOR_DIV.appendChild(COMMENTATOR_IMG);
+//           COMMENTATOR_DIV.appendChild(COMMENTATOR_NAME);
+//           COMMENTATOR_DIV.appendChild(COMMENT_DATE);
+
+//           //CHECK IF USER OWNS A COMMENT.
+//           if (RESPONSE[i].username == USER_INFO.username) {
+//             let DELETE_COMMENT = document.createElement("a");
+//             DELETE_COMMENT.innerText = "X";
+//             DELETE_COMMENT.className =
+//               "DELETE-COMMENT badge bg-danger text-wrap text-decoration-none mx-1";
+//             DELETE_COMMENT.onclick = function () {
+//               REQUEST = fetch("/DELETE-COMMENT", {
+//                 method: "GET",
+//                 headers: {
+//                   commentid: COMMENT_DIV.id,
+//                 },
+//               });
+//               window.location.reload();
+//             };
+//             COMMENTATOR_DIV.appendChild(DELETE_COMMENT);
+//           }
+
+//           //APPEND ELEMENT.
+//           COMMENT_DIV.appendChild(COMMENTATOR_DIV);
+//           COMMENT_DIV.appendChild(COMMENT_CONTENT);
+//           BUTTON_DIV.appendChild(COMMENT_DIV);
+//         }
+//       })();
+//     }
+
+//     IMG_USER.alt = GROUP[i].user_img;
+//     IMG_USER.src = "./img/" + GROUP[i].user_img + ".jpg";
+//     IMG_USER.style.width = "50px";
+//     IMG_USER.style.height = "50px";
+//     IMG_USER.className = "rounded-circle border border-5";
+//     LABEL_USERNAME.innerText = GROUP[i].username;
+//     LABEL_USERNAME.href = "/user/" + GROUP[i].username;
+//     LABEL_USERNAME.className =
+//       "badge bg-primary text-wrap text-decoration-none mx-1";
+
+//     //APPEND ELEMENT.
+//     CHILD_DIV.appendChild(CHILD_CHILD_DIV);
+//     CHILD_DIV.appendChild(BUTTON_DIV);
+//     GET_DIV.appendChild(CHILD_DIV);
+//   }
+// }
+
+// //CREATE POSTS.
+// async function CREATE_POST() {
+//   let IMG_USER = document.getElementsByClassName("IMG-USER")[0];
+//   let LABEL_USERNAME = document.getElementsByClassName("LABEL-USERNAME")[0];
+//   let INPUT_POST = document.getElementsByClassName("INPUT-POST")[0];
+//   if (INPUT_POST.value.length > 0) {
+//     let REQUEST = await fetch("/CREATE-POST", {
+//       method: "GET",
+//       headers: {
+//         "Content-Type": "application/json",
+//         imguser: IMG_USER.alt,
+//         username: LABEL_USERNAME.innerText,
+//         content: INPUT_POST.value,
+//       },
+//     });
+//     let RESPONSE = await REQUEST.status;
+//     window.location.reload();
+//   }
+// }
+
+// //CHANGE PROFILE PICTURE.
+// async function CHANGE_PROFILE_PICTURE(IMG_VALUE) {
+//   //GET RELEVANT INFORMATION.
+//   let IMG_USER = document.getElementsByClassName("IMG-USER")[0];
+//   let LABEL_USERNAME = document.getElementsByClassName("LABEL-USERNAME")[0];
+//   let REQUEST;
+//   let RESPONSE;
+
+//   //UPDATE DATA.
+//   for (let i = 0; i < 3; i++) {
+//     REQUEST = await fetch("/CHANGE-PROFILE-PICTURE", {
+//       method: "GET",
+//       headers: {
+//         "Content-Type": "application/json",
+//         imguser: IMG_VALUE,
+//         username: LABEL_USERNAME.innerText,
+//         count: i,
+//       },
+//     });
+//     RESPONSE = await REQUEST.status;
+//   }
+
+//   //REFRESH TOKEN.
+//   if (RESPONSE == 200) {
+//     REQUEST = await fetch("/REFRESH-TOKEN", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//         username: LABEL_USERNAME.innerText,
+//       },
+//     });
+//     RESPONSE = await REQUEST.json();
+//     await localStorage.removeItem("TOKEN");
+//     await localStorage.setItem("TOKEN", RESPONSE);
+//     window.location.reload();
+//   }
+// }

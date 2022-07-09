@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://kit.fontawesome.com/f86e7bf5e6.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="/css/style-sign-in.css" />
+    <title>Social App</title>
+  </head>
+  <body>
+    <div class="border border-5">
+      <img
+        src="./img/2.jpg"
+        alt="2"
+        class="rounded-circle border border-5"
+        width="100"
+        height="100"
+      />
+      <h5>Welcome!</h5>
+      <form
+        action="javascript:SIGN_IN()"
+        class="d-flex flex-column align-items-center"
+      >
+        <input
+          type="text"
+          placeholder="Username"
+          class="form-control m-1"
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          class="form-control m-1"
+          required
+        />
+        <input type="submit" value="Sign In" class="btn btn-primary m-1" />
+        <a href="/sign-up" class="text-decoration-none">Sign Up</a>
+      </form>
+    </div>
+    <script>
+      (async function () {
+        let GET_TOKEN = await localStorage.getItem("TOKEN");
+        if (GET_TOKEN != null) {
+          window.location.href = "/home";
+        }
+      })();
+      async function SIGN_IN() {
+        let HEADER = document.getElementsByTagName("h5")[0];
+        let USERNAME = document.getElementsByTagName("input")[0];
+        let PASSWORD = document.getElementsByTagName("input")[1];
+        let TOKEN;
+        let WHITESPACE = /\s/g;
+        let VALIDATE_INPUT_USERNAME = USERNAME.value.match(WHITESPACE);
+        let VALIDATE_INPUT_PASSWORD = PASSWORD.value.match(WHITESPACE);
+        if (
+          VALIDATE_INPUT_USERNAME == null &&
+          VALIDATE_INPUT_PASSWORD == null
+        ) {
+          let REQUEST = await fetch("/SIGN-IN", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              username: USERNAME.value,
+              password: PASSWORD.value,
+            },
+          });
+          let RESPONSE = await REQUEST.json();
+          if (RESPONSE == "404") {
+            HEADER.innerText = "Wrong username or password.";
+          } else {
+            TOKEN = RESPONSE;
+            await localStorage.setItem("TOKEN", TOKEN);
+            window.location.href = "/home";
+          }
+        } else {
+          HEADER.innerText = "No whitespace.";
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,110 @@
+body {
+  background-color: #154360;
+  height: 100%;
+}
+
+.ROOT {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -350px;
+  margin-left: -250px;
+  width: 500px;
+  height: 90%;
+  overflow-y: auto;
+}
+
+.ROOT::-webkit-scrollbar {
+  width: 5px;
+}
+
+.ROOT::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.ROOT::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.ROOT::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.NODE {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.POSTS,
+.FRIEND-LISTS,
+.FRIEND-REQUEST,
+.REQUEST-SENT-TO,
+.OTHER-USERS {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  padding: 10px;
+}
+
+.FRIEND-LISTS,
+.FRIEND-REQUEST,
+.REQUEST-SENT-TO,
+.OTHER-USERS {
+  display: none;
+}
+
+.USER-INFO {
+  background-color: #fff;
+}
+
+.MENU {
+  background-color: #007bff;
+}
+
+.MENU > button {
+  padding: 7.5px;
+  border: none;
+  background-color: transparent;
+  color: #fff;
+}
+
+.MENU > button:hover {
+  background-color: #f2f2f2;
+  color: #007bff;
+}
+
+.MENU > button:focus,
+.MENU > button:active {
+  background-color: #f2f2f2;
+  color: #007bff;
+}
+
+.POSTS {
+  z-index: 2;
+}
+
+.POSTS .DATE-POSTED {
+  pointer-events: none;
+}
+
+.POSTS .DELETE-POST,
+.POSTS .DELETE-COMMENT {
+  cursor: pointer;
+}
+
+/*RESPONSIVENESS*/
+@media only screen and (max-width: 600px) {
+  .ROOT {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    margin-top: 0px;
+    margin-left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+  }
+}

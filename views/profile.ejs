@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://kit.fontawesome.com/f86e7bf5e6.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="/css/style-profile.css" />
+    <title><%= username %></title>
+  </head>
+  <body>
+    <div class="border border-5">
+      <img
+        src="/img/<%= user_img %>.jpg"
+        alt="<%= user_img %>"
+        class="rounded-circle border border-5 m-3"
+        width="100"
+        height="100"
+      />
+      <p class="badge bg-primary text-wrap"><%= username %></p>
+    </div>
+    <script>
+      (async function () {
+        //GET ELEMENTS.
+        let PROFILE = document.getElementsByTagName("title")[0];
+        let GET_DIV = document.getElementsByTagName("div")[0];
+        let LABEL_USERNAME = document.getElementsByClassName("p")[0];
+        let BUTTON_CONTAINER = document.createElement("span");
+        let BUTTON = document.createElement("button");
+        let BUTTON2 = document.createElement("button");
+        let ICON = document.createElement("i");
+        let ICON2 = document.createElement("i");
+
+        //GET USER IF ANY.
+        let USER_INFO;
+        let TOKEN = localStorage.getItem("TOKEN");
+
+        //MAKE A REQUEST IF THERE IS USER.
+        let REQUEST;
+        let RESPONSE;
+
+        if (TOKEN != null) {
+          USER_INFO = await JSON.parse(atob(TOKEN.split(".")[1]))[0];
+
+          //ADD FRIEND.
+          ICON.className = "fa-solid fa-user-plus";
+          BUTTON.className = "btn btn-primary";
+
+          //FUNCTIONALITY.
+          BUTTON.onclick = function () {
+            REQUEST = fetch("/ADD-FRIEND", {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                "request-by": USER_INFO.username,
+                "request-to": PROFILE.innerText,
+              },
+            });
+            BUTTON.disabled = true;
+            window.location.reload();
+          };
+
+          //APPEND CHILD.
+          BUTTON.appendChild(ICON);
+          GET_DIV.appendChild(BUTTON);
+
+          if (PROFILE.innerText == USER_INFO.username) {
+            BUTTON.style.display = "none";
+          } else {
+            for (let i = 0; i < 3; i++) {
+              REQUEST = await fetch("/GET-RELATION", {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  username: USER_INFO.username,
+                  profile: PROFILE.innerText,
+                  count: i,
+                },
+              });
+              RESPONSE = await REQUEST.status;
+
+              //UNFRIEND.
+              if (i == 0 && RESPONSE == 200) {
+                //SET PROPERTIES.
+                ICON.className = "fa-solid fa-user-large-slash";
+                BUTTON.className = "btn btn-danger";
+
+                //FUNCTIONALITY.
+                BUTTON.onclick = function () {
+                  REQUEST = fetch("/UNFRIEND", {
+                    method: "GET",
+                    headers: {
+                      username: USER_INFO.username,
+                      profile: PROFILE.innerText,
+                    },
+                  });
+                  BUTTON.disabled = true;
+                  window.location.reload();
+                };
+                break;
+              }
+
+              //CANCEL REQUEST.
+              if (i == 1 && RESPONSE == 200) {
+                //SET PROPERTIES.
+                ICON.className = "fa-solid fa-user-minus";
+                BUTTON.className = "btn btn-warning";
+
+                //FUNCTIONALITY.
+                BUTTON.onclick = function () {
+                  REQUEST = fetch("/CANCEL-REQUEST", {
+                    method: "GET",
+                    headers: {
+                      "Content-Type": "application/json",
+                      "request-by": USER_INFO.username,
+                      "request-to": PROFILE.innerText,
+                    },
+                  });
+                  BUTTON.disabled = true;
+                  window.location.reload();
+                };
+                break;
+              }
+
+              //PENDING REQUEST.
+              if (i == 2 && RESPONSE == 200) {
+                //SET PROPERTIES.
+                BUTTON.className = "btn btn-success";
+                BUTTON2.className = "btn btn-danger";
+                ICON.className = "fa-solid fa-user-plus";
+                ICON2.className = "fa-solid fa-user-minus";
+
+                //FUNCTIONALITY.
+                BUTTON.onclick = function () {
+                  REQUEST = fetch("/ACCEPT-REQUEST", {
+                    method: "GET",
+                    headers: {
+                      "Content-Type": "application/json",
+                      "request-by": PROFILE.innerText,
+                      "request-to": USER_INFO.username,
+                    },
+                  });
+                  BUTTON.disabled = true;
+                  BUTTON2.disabled = true;
+                  window.location.reload();
+                };
+
+                BUTTON2.onclick = function () {
+                  REQUEST = fetch("/DECLINE-REQUEST", {
+                    method: "GET",
+                    headers: {
+                      "Content-Type": "application/json",
+                      "request-by": PROFILE.innerText,
+                      "request-to": USER_INFO.username,
+                    },
+                  });
+                  BUTTON.disabled = true;
+                  BUTTON2.disabled = true;
+                  window.location.reload();
+                };
+
+                //APPEND ELEMENT.
+                BUTTON.appendChild(ICON);
+                BUTTON2.appendChild(ICON2);
+                BUTTON_CONTAINER.appendChild(BUTTON);
+                BUTTON_CONTAINER.appendChild(BUTTON2);
+                GET_DIV.appendChild(BUTTON_CONTAINER);
+                break;
+              }
+            }
+          }
+        }
+      })();
+    </script>
+  </body>
+</html>
