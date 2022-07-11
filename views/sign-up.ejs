@@ -23,9 +23,9 @@
       <img
         src="./img/4.jpg"
         alt="4"
-        class="rounded-circle border border-5"
-        width="100"
-        height="100"
+        class="rounded-circle border border-5 border-primary"
+        width="75"
+        height="75"
       />
       <h5>Join us!</h5>
       <form
@@ -116,14 +116,17 @@
             let STATUS = await NEW_USER.CHECK_INPUT();
             if (STATUS == 200) {
               HEADER.innerText = "Username already exist.";
+              HEADER.className = "btn btn-danger m-1";
             } else {
               NEW_USER.REGISTER_USER();
             }
           } else {
             HEADER.innerText = "No special character.";
+            HEADER.className = "btn btn-danger m-1";
           }
         } else {
           HEADER.innerText = "At least 4 characters long.";
+          HEADER.className = "btn btn-danger m-1";
         }
       }
     </script>
