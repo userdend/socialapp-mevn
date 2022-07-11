@@ -20,7 +20,8 @@ export function CREATE_ELEMENT(
     let BUTTON_DIV = document.createElement("span");
 
     //INITIALIZE CHILD PROPERTIES.
-    CHILD_DIV.className = "d-flex justify-content-between border p-1 m-1";
+    CHILD_DIV.className =
+      "d-flex justify-content-between border border-5 p-1 m-1";
     CHILD_CHILD_DIV.className = "d-flex align-items-start m-1";
 
     //CREATE ICON.

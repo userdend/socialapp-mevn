@@ -310,7 +310,9 @@ app.get("/ADD-FRIEND", (request, response) => {
     "', '" +
     REQUEST_TO +
     "')";
-  connection.query(SQL);
+  connection.query(SQL, (error, result) => {
+    return response.sendStatus(200);
+  });
 });
 
 //GO TO PROFILE.

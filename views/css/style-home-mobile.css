@@ -1,0 +1,132 @@
+@media only screen and (max-width: 600px) {
+  html,
+  body {
+    background-color: #154360;
+    height: 100%;
+  }
+
+  .HEADER {
+    width: 100%;
+    height: 7.5%;
+    display: flex;
+  }
+
+  .HEADER > button {
+    display: block;
+  }
+
+  .ROOT {
+    position: initial;
+    width: 100%;
+    height: 92.5%;
+    background-color: #fff;
+    display: flex;
+    padding-left: 0%;
+    padding-right: 0%;
+  }
+
+  .ROOT::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  .ROOT::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  .ROOT::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+
+  .ROOT::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  .PROFILE-AND-MENU {
+    display: block;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background-color: #007bff;
+    width: 50%;
+    z-index: 5;
+    left: -50%;
+  }
+
+  .NODE {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .POSTS,
+  .FRIEND-LISTS,
+  .FRIEND-REQUEST,
+  .REQUEST-SENT-TO,
+  .OTHER-USERS {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    padding: 10px;
+  }
+
+  .FRIEND-LISTS,
+  .FRIEND-REQUEST,
+  .REQUEST-SENT-TO,
+  .OTHER-USERS {
+    display: none;
+  }
+
+  .USER-INFO {
+    background-color: #fff;
+  }
+
+  .PROFILE-CONTENT {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .MENU {
+    display: flex;
+    flex-direction: column;
+    justify-content: initial;
+  }
+
+  .MENU > button {
+    padding: 7.5px;
+    border: none;
+    background-color: transparent;
+    color: #fff;
+  }
+
+  .MENU > button:hover {
+    background-color: #f2f2f2;
+    color: #007bff;
+  }
+
+  .MENU > button:focus,
+  .MENU > button:active {
+    background-color: #f2f2f2;
+    color: #007bff;
+  }
+
+  .POSTS {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    height: 100%;
+    overflow: scroll;
+  }
+
+  .POSTS .DATE-POSTED {
+    pointer-events: none;
+  }
+
+  .POSTS .DELETE-POST,
+  .POSTS .DELETE-COMMENT {
+    cursor: pointer;
+  }
+}

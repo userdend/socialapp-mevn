@@ -8,6 +8,7 @@ export async function OTHER_USERS(
 ) {
   let NOT_LISTED;
   let FILTERED_USERS = [];
+
   REQUEST = await fetch("/GET-OTHER-USER", {
     method: "GET",
     headers: {

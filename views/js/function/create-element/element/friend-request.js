@@ -13,11 +13,11 @@ export function CREATE_ELEMENT_FRIEND_REQUEST(
   //SET PROPERTIES.
   ICON.className = "fa-solid fa-user-check";
   ACCEPT_BUTTON.appendChild(ICON);
-  ACCEPT_BUTTON.className = "btn btn-success mx-1";
+  ACCEPT_BUTTON.className = "btn btn-success mx-1 btn-sm";
 
   ICON1.className = "fa-solid fa-user-xmark";
   DECLINE_BUTTON.appendChild(ICON1);
-  DECLINE_BUTTON.className = "btn btn-danger";
+  DECLINE_BUTTON.className = "btn btn-danger btn-sm";
 
   //FUNCTIONALITY.
   ACCEPT_BUTTON.onclick = function () {

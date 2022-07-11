@@ -13,7 +13,7 @@ export function CREATE_ELEMENT_POST(
   let POST_CONTENT_DIV = document.createElement("span");
 
   //SET PROPERTIES.
-  CHILD_DIV.className = "d-flex flex-column border p-1 m-1";
+  CHILD_DIV.className = "d-flex flex-column border border-5 p-1 m-1";
   CHILD_DIV.id = GROUP_INDEX.id;
   POST_CONTENT_DIV.innerHTML = GROUP_INDEX.content + "<br />";
   BUTTON_DIV.appendChild(POST_CONTENT_DIV);

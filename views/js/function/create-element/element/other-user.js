@@ -11,7 +11,7 @@ export function CREATE_ELEMENT_OTHER_USER(
   //SET PROPERTIES.
   ICON.className = "fa-solid fa-user-plus";
   BUTTON.appendChild(ICON);
-  BUTTON.className = "btn btn-primary";
+  BUTTON.className = "btn btn-primary btn-sm";
 
   //FUNCTIONALITY.
   BUTTON.onclick = function () {
@@ -25,6 +25,22 @@ export function CREATE_ELEMENT_OTHER_USER(
     });
     BUTTON.disabled = true;
     window.location.reload();
+
+    // //jQuery.
+    // $.ajax({
+    //   url: "/ADD-FRIEND",
+    //   method: "GET",
+    //   contentType: "application/json",
+    //   headers: {
+    //     "request-by": USER_INFO.username,
+    //     "request-to": GROUP_INDEX.username,
+    //   },
+    //   success: function (data) {},
+    //   error: function (data) {
+    //     console.log(data);
+    //   },
+    // });
+    // //jQuery.
   };
 
   //APPEND ELEMENT.

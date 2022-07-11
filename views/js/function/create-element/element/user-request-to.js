@@ -11,7 +11,7 @@ export function CREATE_ELEMENT_USER_REQUEST_TO(
   //SET PROPERTIES.
   ICON.className = "fa-solid fa-user-minus";
   BUTTON.appendChild(ICON);
-  BUTTON.className = "btn btn-warning";
+  BUTTON.className = "btn btn-warning btn-sm";
 
   //FUNCTIONALITY.
   BUTTON.onclick = function () {

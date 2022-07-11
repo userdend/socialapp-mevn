@@ -16,42 +16,72 @@
       crossorigin="anonymous"
     ></script>
     <link rel="stylesheet" href="./css/style-home.css" />
+    <link rel="stylesheet" href="./css/style-home-mobile.css" />
     <title>Home</title>
   </head>
   <body>
-    <div class="ROOT border border-5 shadow mb-5 bg-white rounded">
-      <!--USER INFO-->
-      <div class="USER-INFO p-3 d-flex flex-row justify-content-center">
-        <img
-          src=""
-          alt=""
-          class="IMG-USER rounded-circle border border-5 mx-1"
-          width="100"
-          height="100"
-        />
-        <div class="d-flex flex-column justify-content-center">
-          <p class="LABEL-USERNAME badge bg-primary text-wrap m-0"></p>
-          <select
-            onchange="CHANGE_PROFILE_PICTURE(this.value)"
-            class="IMG-OPTION border border-3 m-1"
-          >
-            <option value="">Image</option>
-            <option value="0">IMG_0</option>
-            <option value="1">IMG_1</option>
-            <option value="2">IMG_2</option>
-            <option value="3">IMG_3</option>
-            <option value="4">IMG_4</option>
-          </select>
-          <button onclick="SIGN_OUT()" class="border border-3">Sign Out</button>
+    <div class="HEADER bg-primary">
+      <button class="DISPLAY-MENU btn btn-primary" onclick="DISPLAY_MENU()">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+    <div class="ROOT">
+      <div class="PROFILE-AND-MENU bg-primary">
+        <!--USER INFO-->
+        <div
+          class="USER-INFO p-3 d-flex flex-row justify-content-center bg-primary"
+        >
+          <img
+            src=""
+            alt=""
+            class="IMG-USER rounded-circle border border-5 mx-1"
+            width="50"
+            height="50"
+          />
+          <div class="PROFILE-CONTENT">
+            <p
+              class="LABEL-USERNAME badge bg-primary text-wrap m-0 border border-light"
+            ></p>
+            <select
+              onchange="CHANGE_PROFILE_PICTURE(this.value)"
+              class="IMG-OPTION border border-3 m-1"
+            >
+              <option value="">Image</option>
+              <option value="0">IMG_0</option>
+              <option value="1">IMG_1</option>
+              <option value="2">IMG_2</option>
+              <option value="3">IMG_3</option>
+              <option value="4">IMG_4</option>
+            </select>
+            <button onclick="SIGN_OUT()" class="btn btn-danger btn-sm">
+              Sign Out
+            </button>
+          </div>
         </div>
-      </div>
-      <!--MENU-->
-      <div class="MENU d-flex justify-content-center">
-        <button onclick="SET_DISPLAY(0)">Posts</button>
-        <button onclick="SET_DISPLAY(1)">Friends</button>
-        <button class="BUTTON-REQUEST" onclick="SET_DISPLAY(2)">Request</button>
-        <button class="BUTTON-PENDING" onclick="SET_DISPLAY(3)">Pending</button>
-        <button onclick="SET_DISPLAY(4)">Other</button>
+        <!--MENU-->
+        <div class="MENU">
+          <button class="btn btn-outline-primary" onclick="SET_DISPLAY(0)">
+            Posts
+          </button>
+          <button class="btn btn-outline-primary" onclick="SET_DISPLAY(1)">
+            Friends
+          </button>
+          <button
+            class="BUTTON-REQUEST btn btn-outline-primary"
+            onclick="SET_DISPLAY(2)"
+          >
+            Request
+          </button>
+          <button
+            class="BUTTON-PENDING btn btn-outline-primary"
+            onclick="SET_DISPLAY(3)"
+          >
+            Pending
+          </button>
+          <button class="btn btn-outline-primary" onclick="SET_DISPLAY(4)">
+            Other
+          </button>
+        </div>
       </div>
       <div class="NODE">
         <!--POSTS-->
@@ -98,6 +128,7 @@
         </div>
       </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="./js/script-home.js"></script>
     <script type="module" src="./js/init.js"></script>
     <script>
